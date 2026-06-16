@@ -1,1 +1,434 @@
-hello realreal
+cat > /mnt/user-data/outputs/portfolio.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>포트폴리오 — 홍길동</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0f0f0f;
+      --off:   #f7f5f2;
+      --mid:   #7a7672;
+      --rule:  #e0dbd4;
+      --white: #ffffff;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--off);
+      color: var(--black);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SHELL ── */
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem clamp(1.5rem, 6vw, 5rem);
+      border-bottom: 1px solid var(--rule);
+      background: var(--off);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      letter-spacing: .02em;
+      text-decoration: none;
+      color: var(--black);
+      cursor: pointer;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: .25rem;
+      list-style: none;
+    }
+    .nav-tabs button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      padding: .5rem 1rem;
+      border-radius: 99px;
+      transition: background .18s, color .18s;
+    }
+    .nav-tabs button:hover { background: var(--rule); color: var(--black); }
+    .nav-tabs button.active { background: var(--black); color: var(--off); }
+
+    /* ── PAGE CONTENT ── */
+    .pages { position: relative; }
+    .page {
+      display: none;
+      opacity: 0;
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem);
+      max-width: 1080px;
+      margin: 0 auto;
+      transition: opacity .35s ease;
+    }
+    .page.active {
+      display: block;
+      animation: fadeIn .35s forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── HOME ── */
+    .home-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: end;
+      min-height: 60vh;
+    }
+    .home-eyebrow {
+      font-size: .72rem; font-weight: 500;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--mid); margin-bottom: 1.2rem;
+    }
+    .home-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 6.5vw, 5.5rem);
+      line-height: 1.02;
+      letter-spacing: -.01em;
+    }
+    .home-name em { font-style: italic; color: var(--mid); }
+    .home-right { padding-bottom: .5rem; }
+    .home-desc {
+      color: var(--mid);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 30ch;
+      margin-bottom: 2.5rem;
+    }
+    .home-cta-group { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .btn-dark {
+      display: inline-block;
+      background: var(--black); color: var(--off);
+      font-size: .78rem; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase;
+      text-decoration: none; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      padding: .85rem 1.8rem; border-radius: 99px;
+      transition: opacity .2s;
+    }
+    .btn-dark:hover { opacity: .7; }
+    .btn-ghost {
+      font-size: .78rem; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--mid); background: none; border: none;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      text-decoration: underline; text-underline-offset: 4px;
+      transition: color .2s;
+    }
+    .btn-ghost:hover { color: var(--black); }
+    .home-meta {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+      display: flex; gap: 3rem; flex-wrap: wrap;
+    }
+    .meta-item dt {
+      font-size: .68rem; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--mid); margin-bottom: .35rem;
+    }
+    .meta-item dd { font-size: .95rem; }
+
+    /* ── ABOUT ── */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    .page-eyebrow {
+      font-size: .72rem; font-weight: 500;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--mid); margin-bottom: 1rem;
+    }
+    .page-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      margin-bottom: 2.5rem;
+    }
+    .about-text p { color: var(--mid); line-height: 1.75; margin-bottom: 1.1rem; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 2rem; }
+    .tag {
+      font-size: .68rem; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase;
+      border: 1px solid var(--rule); border-radius: 99px;
+      padding: .28rem .8rem; color: var(--mid);
+    }
+    .about-dl dt {
+      font-size: .68rem; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--mid); margin-top: 1.6rem;
+    }
+    .about-dl dd { margin-top: .3rem; font-size: .95rem; }
+    .about-dl dt:first-child { margin-top: 0; }
+
+    /* ── PROJECTS ── */
+    .project-list { border-top: 1px solid var(--rule); }
+    .project-item {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr auto auto;
+      align-items: center;
+      gap: 1.5rem 2rem;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--rule);
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+    .project-num { font-size: .72rem; font-weight: 500; color: var(--mid); }
+    .project-info h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem; margin-bottom: .25rem;
+      transition: opacity .2s;
+    }
+    .project-item:hover .project-info h3 { opacity: .45; }
+    .project-info p { font-size: .88rem; color: var(--mid); }
+    .project-tags { display: flex; gap: .35rem; flex-wrap: wrap; justify-content: flex-end; }
+    .project-tags span {
+      font-size: .65rem; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase;
+      border: 1px solid var(--rule); border-radius: 99px;
+      padding: .2rem .6rem; color: var(--mid);
+    }
+    .project-arrow { font-size: 1rem; color: var(--mid); transition: transform .2s; }
+    .project-item:hover .project-arrow { transform: translate(4px,-4px); }
+
+    /* ── CONTACT ── */
+    .contact-layout { max-width: 620px; }
+    .contact-big {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+    .contact-big em { font-style: italic; color: var(--mid); }
+    .contact-sub { color: var(--mid); font-size: 1rem; line-height: 1.7; margin-bottom: 3rem; max-width: 38ch; }
+    .contact-links { display: flex; flex-direction: column; gap: 0; }
+    .contact-link {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.3rem 0;
+      border-top: 1px solid var(--rule);
+      text-decoration: none; color: var(--black);
+      transition: opacity .2s;
+    }
+    .contact-link:last-child { border-bottom: 1px solid var(--rule); }
+    .contact-link:hover { opacity: .45; }
+    .contact-link-label { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); }
+    .contact-link-value { font-size: .95rem; }
+    .contact-link-arrow { font-size: .9rem; color: var(--mid); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .home-grid, .about-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .home-meta { gap: 1.5rem; }
+      .project-item { grid-template-columns: 2rem 1fr auto; }
+      .project-tags { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <nav>
+    <span class="nav-logo" onclick="showPage('home')">홍길동</span>
+    <ul class="nav-tabs">
+      <li><button onclick="showPage('home')" id="tab-home" class="active">Home</button></li>
+      <li><button onclick="showPage('about')" id="tab-about">About</button></li>
+      <li><button onclick="showPage('projects')" id="tab-projects">Projects</button></li>
+      <li><button onclick="showPage('contact')" id="tab-contact">Contact</button></li>
+    </ul>
+  </nav>
+
+  <div class="pages">
+
+    <!-- HOME -->
+    <section class="page active" id="page-home">
+      <div class="home-grid">
+        <div>
+          <p class="home-eyebrow">포트폴리오 2025</p>
+          <h1 class="home-name">홍길동<br><em>개발자</em></h1>
+        </div>
+        <div class="home-right">
+          <p class="home-desc">
+            사용자 경험을 고민하며 코드를 짜는<br>
+            프론트엔드 개발자입니다.<br>
+            깔끔한 인터페이스와 빠른 실행을 좋아합니다.
+          </p>
+          <div class="home-cta-group">
+            <button class="btn-dark" onclick="showPage('projects')">프로젝트 보기</button>
+            <button class="btn-ghost" onclick="showPage('contact')">연락하기 →</button>
+          </div>
+        </div>
+      </div>
+      <dl class="home-meta">
+        <div class="meta-item">
+          <dt>전공</dt>
+          <dd>컴퓨터공학</dd>
+        </div>
+        <div class="meta-item">
+          <dt>희망 직무</dt>
+          <dd>프론트엔드 / 풀스택</dd>
+        </div>
+        <div class="meta-item">
+          <dt>거주지</dt>
+          <dd>서울, 대한민국</dd>
+        </div>
+        <div class="meta-item">
+          <dt>상태</dt>
+          <dd>구직 중 🟢</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="page" id="page-about">
+      <p class="page-eyebrow">About</p>
+      <h2 class="page-title">저는 이런 사람이에요</h2>
+      <div class="about-layout">
+        <div class="about-text">
+          <p>
+            안녕하세요! 저는 사용자 중심의 서비스를 만드는 것을 즐기는
+            개발자 홍길동입니다. 대학에서 컴퓨터공학을 전공하며
+            웹 개발의 즐거움을 알게 되었고, 꾸준히 사이드 프로젝트를
+            진행해 왔습니다.
+          </p>
+          <p>
+            복잡한 문제를 단순하게 풀어내는 것을 좋아하고,
+            팀과 함께 성장하는 환경을 추구합니다. 새로운 기술을
+            빠르게 익히고 실제로 적용해 보는 걸 즐깁니다.
+          </p>
+          <div class="tag-list">
+            <span class="tag">React</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">UI/UX</span>
+            <span class="tag">Git</span>
+            <span class="tag">협업</span>
+          </div>
+        </div>
+        <dl class="about-dl">
+          <dt>이름</dt><dd>홍길동</dd>
+          <dt>전공</dt><dd>컴퓨터공학 (○○대학교, 2025년 졸업 예정)</dd>
+          <dt>희망 직무</dt><dd>프론트엔드 / 풀스택 개발자</dd>
+          <dt>이메일</dt><dd>hello@example.com</dd>
+          <dt>GitHub</dt><dd>github.com/username</dd>
+          <dt>거주지</dt><dd>서울, 대한민국</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="page" id="page-projects">
+      <p class="page-eyebrow">Projects</p>
+      <h2 class="page-title">주요 프로젝트</h2>
+      <div class="project-list">
+
+        <a class="project-item" href="#" target="_blank" rel="noopener">
+          <span class="project-num">01</span>
+          <div class="project-info">
+            <h3>프로젝트 이름 A</h3>
+            <p>팀 일정 관리 웹앱 — 실시간 동기화와 직관적인 드래그 앤 드롭 UI 구현</p>
+          </div>
+          <div class="project-tags">
+            <span>React</span><span>Firebase</span><span>Tailwind</span>
+          </div>
+          <span class="project-arrow">↗</span>
+        </a>
+
+        <a class="project-item" href="#" target="_blank" rel="noopener">
+          <span class="project-num">02</span>
+          <div class="project-info">
+            <h3>프로젝트 이름 B</h3>
+            <p>오픈 API 활용 날씨 대시보드 — 위치 기반 실시간 데이터 시각화</p>
+          </div>
+          <div class="project-tags">
+            <span>TypeScript</span><span>Chart.js</span><span>REST API</span>
+          </div>
+          <span class="project-arrow">↗</span>
+        </a>
+
+        <a class="project-item" href="#" target="_blank" rel="noopener">
+          <span class="project-num">03</span>
+          <div class="project-info">
+            <h3>프로젝트 이름 C</h3>
+            <p>Node.js 기반 커뮤니티 플랫폼 — 인증 / 게시판 / 댓글 풀스택 구현</p>
+          </div>
+          <div class="project-tags">
+            <span>Node.js</span><span>MongoDB</span><span>Express</span>
+          </div>
+          <span class="project-arrow">↗</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="page" id="page-contact">
+      <div class="contact-layout">
+        <p class="page-eyebrow">Contact</p>
+        <h2 class="contact-big">같이 일해봐요,<br><em>연락 주세요</em></h2>
+        <p class="contact-sub">
+          좋은 팀과 좋은 제품을 만들고 싶습니다.<br>
+          채용 문의, 협업 제안 모두 환영합니다.
+        </p>
+        <div class="contact-links">
+          <a class="contact-link" href="mailto:hello@example.com">
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">hello@example.com</span>
+            <span class="contact-link-arrow">↗</span>
+          </a>
+          <a class="contact-link" href="https://github.com/username" target="_blank" rel="noopener">
+            <span class="contact-link-label">GitHub</span>
+            <span class="contact-link-value">github.com/username</span>
+            <span class="contact-link-arrow">↗</span>
+          </a>
+          <a class="contact-link" href="https://linkedin.com/in/username" target="_blank" rel="noopener">
+            <span class="contact-link-label">LinkedIn</span>
+            <span class="contact-link-value">linkedin.com/in/username</span>
+            <span class="contact-link-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /pages -->
+</div><!-- /shell -->
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.getElementById('tab-' + id).classList.add('active');
+  }
+</script>
+</body>
+</html>
+HTMLEOF
+echo "done"
