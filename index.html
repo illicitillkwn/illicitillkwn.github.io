@@ -1,16 +1,8 @@
-앗, 죄송합니다! 제가 코드를 수정하면서 CSS 선택자와 폰트 설정을 건드리는 바람에 페이지 전환 스크립트가 먹통이 되고 영문 폰트도 제대로 적용되지 않았네요. 완벽하게 터미널 감성이 나도록 작동하는 전체 코드를 다시 준비했습니다.
+제공해주신 코드에서 영문/숫자 터미널 느낌을 내는 폰트인 `'Share Tech Mono'`와 `'Courier Prime'`을 빼고, 요청하신 `'Consolas'`로 깔끔하게 변경해 드렸습니다.
 
-이번에는 **카테고리 전환이 확실하게 작동**하며, 영문 및 숫자, 특수문자에 확실한 터미널 느낌을 주기 위해 구글 폰트에서 제공하는 대표적인 터미널/코딩용 폰트인 'Courier Prime'과 'Share Tech Mono'를 직접 불러와서 적용했습니다.
+`Consolas`는 대중적인 폰트이지만 사용자의 시스템에 설치되어 있지 않을 경우를 대비해, 대체 폰트로 모노스페이스 계열(`Courier New`, `monospace`)을 함께 지정해 두었습니다.
 
-### 문제 해결 및 수정 포인트
-
-* **카테고리 먹통 해결:** CSS에서 세부 폰트 스타일을 변경하면서 깨졌던 레이아웃과 active 클래스 간섭을 완전히 해결하여 `Home`, `About`, `Projects`, `Contact` 탭이 부드럽게 잘 열립니다.
-* **진짜 터미널 폰트 탑재:** 구글 폰트에서 `Courier Prime` (터미널 고정폭 폰트)과 세련된 모노톤의 `Share Tech Mono`를 탑재하여 한글은 `SUIT`, 영문/숫자/기호는 완벽한 개발자 터미널 폰트로 출력됩니다.
-* **홈 화면 요구사항 유지:** 왼쪽 프로필 사진 영역(점선 박스), 오른쪽 자기소개 구성 및 하단 메타 정보 삭제 상태를 고스란히 유지했습니다.
-
----
-
-### 수정된 전체 HTML 코드
+아래 전체 코드를 복사해서 사용하시면 됩니다.
 
 ```html
 <!DOCTYPE html>
@@ -23,7 +15,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,8 +31,8 @@
       height: 100%;
       background: var(--black);
       color: var(--neon-green);
-      /* 한글은 SUIT, 영문/숫자/기호는 완벽한 터미널 모노스페이스 폰트 지정 */
-      font-family: 'Share Tech Mono', 'Courier Prime', 'SUIT', monospace;
+      /* 영문/숫자는 Consolas를 우선 적용하고, 한글은 SUIT로 고정 */
+      font-family: 'Consolas', 'Courier New', 'SUIT', monospace;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -405,7 +396,10 @@
       </div>
     </section>
 
-  </div></div><script>
+  </div>
+</div>
+
+<script>
   function showPage(id) {
     // 모든 페이지 숨기기
     document.querySelectorAll('.page').forEach(p => {
