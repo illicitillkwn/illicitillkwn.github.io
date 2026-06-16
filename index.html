@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>포트폴리오 — 홍길동</title>
+  <title>포트폴리오 — 냐냐냥</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin"/>
@@ -24,7 +24,7 @@
       height: 100%;
       background: var(--black);
       color: var(--neon-green);
-      /* [수정] 전체 문서에 Consolas를 최우선 적용하여 영문/숫자를 모두 통일합니다. */
+      /* 영문/숫자는 Consolas 최우선 적용, 한글은 SUIT로 적용 */
       font-family: 'Consolas', 'Courier New', 'SUIT', monospace;
       -webkit-font-smoothing: antialiased;
     }
@@ -83,6 +83,40 @@
       border-color: var(--hotpink);
     }
 
+    /* ── 이름 자리의 언어 선택 버튼 (KO / EN) ── */
+    .lang-switcher-title {
+      display: inline-flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .lang-title-btn {
+      background: none;
+      border: none;
+      color: var(--neon-green);
+      font-family: inherit;
+      font-size: clamp(2.5rem, 5vw, 4rem); /* 원래 이름 크기 유지 */
+      font-weight: 700;
+      line-height: 1.1;
+      cursor: pointer;
+      padding: 0;
+      opacity: 0.4;
+      transition: all 0.2s;
+    }
+    .lang-title-btn:hover {
+      color: var(--hotpink);
+      opacity: 0.8;
+    }
+    .lang-title-btn.active {
+      color: var(--hotpink);
+      opacity: 1;
+    }
+
+    /* 다국어 텍스트 본문 제어용 클래스 */
+    .lang-en { display: none; }
+    body.lang-is-en .lang-ko { display: none; }
+    body.lang-is-en .lang-en { display: block; }
+    body.lang-is-en span.lang-en, body.lang-is-en br.lang-en { display: inline; }
+
     /* ── PAGE CONTENT ── */
     .pages { position: relative; }
     .page {
@@ -127,18 +161,17 @@
       letter-spacing: .14em; text-transform: uppercase;
       color: var(--hotpink); margin-bottom: 1.2rem;
     }
-    .home-name {
+    .home-name-sub {
       font-size: clamp(2.5rem, 5vw, 4rem);
       line-height: 1.1;
       margin-bottom: 1.5rem;
     }
-    .home-name em { font-style: normal; color: var(--hotpink); }
+    .home-name-sub em { font-style: normal; color: var(--hotpink); }
     .home-desc {
       color: var(--neon-green);
       font-size: 1.05rem;
       line-height: 1.8;
       margin-bottom: 2.5rem;
-      /* font-family 개별 선언 제거 (상위 Consolas 상속) */
     }
     
     /* ── BUTTONS ── */
@@ -187,7 +220,6 @@
       line-height: 1.1;
       margin-bottom: 2.5rem;
     }
-    /* font-family 개별 선언 제거 (상위 Consolas 상속) */
     .about-text p { color: var(--neon-green); line-height: 1.75; margin-bottom: 1.1rem; }
     .tag-list { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 2rem; }
     .tag {
@@ -200,7 +232,6 @@
       letter-spacing: .1rem; text-transform: uppercase;
       color: var(--hotpink); margin-top: 1.6rem;
     }
-    /* font-family 개별 선언 제거 (상위 Consolas 상속) */
     .about-dl dd { margin-top: .3rem; font-size: .95rem; color: var(--neon-green); }
     .about-dl dt:first-child { margin-top: 0; }
 
@@ -218,10 +249,8 @@
       cursor: pointer;
     }
     .project-num { font-size: .85rem; font-weight: 700; color: var(--hotpink); }
-    /* font-family 개별 선언 제거 (상위 Consolas 상속) */
     .project-info h3 { font-size: 1.25rem; margin-bottom: .25rem; }
     .project-item:hover .project-info h3 { color: var(--hotpink); }
-    /* font-family 개별 선언 제거 (상위 Consolas 상속) */
     .project-info p { font-size: .9rem; color: var(--neon-green); opacity: 0.8; }
     .project-tags { display: flex; gap: .35rem; flex-wrap: wrap; justify-content: flex-end; }
     .project-tags span {
@@ -240,7 +269,6 @@
       margin-bottom: 1.2rem;
     }
     .contact-big em { font-style: normal; color: var(--hotpink); }
-    /* font-family 개별 선언 제거 (상위 Consolas 상속) */
     .contact-sub { color: var(--neon-green); font-size: 1rem; line-height: 1.7; margin-bottom: 3rem; max-width: 38ch; opacity: 0.8; }
     .contact-links { display: flex; flex-direction: column; gap: 0; }
     .contact-link {
@@ -263,6 +291,7 @@
       .about-layout { grid-template-columns: 1fr; gap: 2rem; }
       .project-item { grid-template-columns: 2rem 1fr auto; }
       .project-tags { display: none; }
+      .lang-switcher-title { justify-content: center; }
     }
   </style>
 </head>
@@ -270,7 +299,7 @@
 <div class="shell">
 
   <nav>
-    <span class="nav-logo" onclick="showPage('home')">HONG_GD_</span>
+    <span class="nav-logo" onclick="showPage('home')">Portfolio_</span>
     <ul class="nav-tabs">
       <li><button onclick="showPage('home')" id="tab-home" class="active">Home</button></li>
       <li><button onclick="showPage('about')" id="tab-about">About</button></li>
@@ -286,15 +315,32 @@
         <div class="home-profile-wrap">
           <img class="home-profile-img" src="https://via.placeholder.com/400" alt="프로필 사진">
         </div>
-        
+         
         <div class="home-right">
           <p class="home-eyebrow">SYSTEM.STATUS = "ACTIVE"</p>
-          <h1 class="home-name">홍길동<br><em>DEVELOPER_</em></h1>
+          
+          <div class="lang-switcher-title">
+            <button class="lang-title-btn active" id="btn-ko" onclick="changeLang('ko')">KO</button>
+            <button class="lang-title-btn" id="btn-en" onclick="changeLang('en')">EN</button>
+          </div>
+          
+          <h1 class="home-name-sub">
+            <em>DEVELOPER_</em>
+          </h1>
+
           <p class="home-desc">
-            사용자 경험을 고민하며 코드를 짜는<br>
-            프론트엔드 개발자입니다.<br>
-            깔끔한 인터페이스와 빠른 실행을 좋아합니다.
+            <span class="lang-ko">
+              사용자 경험을 고민하며 코드를 짜는<br>
+              프론트엔드 개발자입니다.<br>
+              깔끔한 인터페이스와 빠른 실행을 좋아합니다.
+            </span>
+            <span class="lang-en">
+              I am a frontend developer who crafts code<br>
+              with a deep focus on user experience.<br>
+              I value clean interfaces and fast performance.
+            </span>
           </p>
+
           <div class="home-cta-group">
             <button class="btn-dark" onclick="showPage('projects')">./view_projects</button>
             <button class="btn-ghost" onclick="showPage('contact')">contact_me →</button>
@@ -305,20 +351,34 @@
 
     <section class="page" id="page-about">
       <p class="page-eyebrow">cat about.txt</p>
-      <h2 class="page-title">저는 이런 사람이에요</h2>
+      <h2 class="page-title">
+        <span class="lang-ko">저는 이런 사람이에요</span>
+        <span class="lang-en">About Me</span>
+      </h2>
       <div class="about-layout">
         <div class="about-text">
-          <p>
+          <p class="lang-ko">
             안녕하세요! 저는 사용자 중심의 서비스를 만드는 것을 즐기는
             개발자 홍길동입니다. 대학에서 컴퓨터공학을 전공하며
             웹 개발의 즐거움을 알게 되었고, 꾸준히 사이드 프로젝트를
             진행해 왔습니다.
           </p>
-          <p>
+          <p class="lang-ko">
             복잡한 문제를 단순하게 풀어내는 것을 좋아하고,
             팀과 함께 성장하는 환경을 추구합니다. 새로운 기술을
             빠르게 익히고 실제로 적용해 보는 걸 즐깁니다.
           </p>
+
+          <p class="lang-en">
+            Hello! I'm a developer who loves building user-centric services. 
+            Majoring in Computer Science, I discovered the joy of web development 
+            and have been continuously working on side projects.
+          </p>
+          <p class="lang-en">
+            I enjoy simplifying complex problems and thrive in environments where 
+            I can grow alongside my team. I love quickly learning and applying new technologies.
+          </p>
+
           <div class="tag-list">
             <span class="tag">React</span>
             <span class="tag">TypeScript</span>
@@ -328,9 +388,21 @@
           </div>
         </div>
         <dl class="about-dl">
-          <dt>NAME</dt><dd>홍길동</dd>
-          <dt>MAJOR</dt><dd>컴퓨터공학 (○○대학교, 2025년 졸업 예정)</dd>
-          <dt>POSITION</dt><dd>프론트엔드 / 풀스택 개발자</dd>
+          <dt>NAME</dt>
+          <dd><span class="lang-ko">홍길동</span><span class="lang-en">Hong Gil Dong</span></dd>
+          
+          <dt>MAJOR</dt>
+          <dd>
+            <span class="lang-ko">컴퓨터공학 (○○대학교, 2025년 졸업 예정)</span>
+            <span class="lang-en">Computer Science (Graduating 2025)</span>
+          </dd>
+          
+          <dt>POSITION</dt>
+          <dd>
+            <span class="lang-ko">프론트엔드 / 풀스택 개발자</span>
+            <span class="lang-en">Frontend / Full-Stack Developer</span>
+          </dd>
+          
           <dt>EMAIL</dt><dd>hello@example.com</dd>
           <dt>GITHUB</dt><dd>github.com/username</dd>
         </dl>
@@ -339,14 +411,23 @@
 
     <section class="page" id="page-projects">
       <p class="page-eyebrow">ls -la ./projects</p>
-      <h2 class="page-title">주요 프로젝트</h2>
+      <h2 class="page-title">
+        <span class="lang-ko">주요 프로젝트</span>
+        <span class="lang-en">Featured Projects</span>
+      </h2>
       <div class="project-list">
 
         <a class="project-item" href="#" target="_blank" rel="noopener">
           <span class="project-num">01</span>
           <div class="project-info">
-            <h3>프로젝트 이름 A</h3>
-            <p>팀 일정 관리 웹앱 — 실시간 동기화와 직관적인 드래그 앤 드롭 UI 구현</p>
+            <h3>
+              <span class="lang-ko">프로젝트 이름 A</span>
+              <span class="lang-en">Project Alpha</span>
+            </h3>
+            <p>
+              <span class="lang-ko">팀 일정 관리 웹앱 — 실시간 동기화와 직관적인 드래그 앤 드롭 UI 구현</span>
+              <span class="lang-en">Team Scheduler Web App — Real-time sync & intuitive Drag-and-Drop UI</span>
+            </p>
           </div>
           <div class="project-tags">
             <span>React</span><span>Firebase</span>
@@ -357,8 +438,14 @@
         <a class="project-item" href="#" target="_blank" rel="noopener">
           <span class="project-num">02</span>
           <div class="project-info">
-            <h3>프로젝트 이름 B</h3>
-            <p>오픈 API 활용 날씨 대시보드 — 위치 기반 실시간 데이터 시각화</p>
+            <h3>
+              <span class="lang-ko">프로젝트 이름 B</span>
+              <span class="lang-en">Project Beta</span>
+            </h3>
+            <p>
+              <span class="lang-ko">오픈 API 활용 날씨 대시보드 — 위치 기반 실시간 데이터 시각화</span>
+              <span class="lang-en">Weather Dashboard — Location-based real-time data visualization via Open API</span>
+            </p>
           </div>
           <div class="project-tags">
             <span>TypeScript</span><span>Chart.js</span>
@@ -372,10 +459,13 @@
     <section class="page" id="page-contact">
       <div class="contact-layout">
         <p class="page-eyebrow">ssh contact@hong</p>
-        <h2 class="contact-big">같이 일해봐요,<br><em>연락 주세요</em></h2>
+        <h2 class="contact-big">
+          <span class="lang-ko">같이 일해봐요,<br><em>연락 주세요</em></span>
+          <span class="lang-en">Let's work together,<br><em>Get in touch</em></span>
+        </h2>
         <p class="contact-sub">
-          좋은 팀과 좋은 제품을 만들고 싶습니다.<br>
-          채용 문의, 협업 제안 모두 환영합니다.
+          <span class="lang-ko">좋은 팀과 좋은 제품을 만들고 싶습니다.<br>채용 문의, 협업 제안 모두 환영합니다.</span>
+          <span class="lang-en">I want to build great products with a great team.<br>Open to opportunities and collaboration.</span>
         </p>
         <div class="contact-links">
           <a class="contact-link" href="mailto:hello@example.com">
@@ -396,6 +486,7 @@
 </div>
 
 <script>
+  // 페이지 전환 함수
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => {
       p.classList.remove('active');
@@ -410,6 +501,23 @@
     if (targetPage && targetTab) {
       targetPage.classList.add('active');
       targetTab.classList.add('active');
+    }
+  }
+
+  // 언어 전환 함수
+  function changeLang(lang) {
+    const body = document.body;
+    const btnKo = document.getElementById('btn-ko');
+    const btnEn = document.getElementById('btn-en');
+
+    if (lang === 'en') {
+      body.classList.add('lang-is-en');
+      btnEn.classList.add('active');
+      btnKo.classList.remove('active');
+    } else {
+      body.classList.remove('lang-is-en');
+      btnKo.classList.add('active');
+      btnEn.classList.remove('active');
     }
   }
 </script>
