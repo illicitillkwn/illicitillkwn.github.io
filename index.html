@@ -46,14 +46,33 @@
       background: var(--black);
       position: sticky; top: 0; z-index: 10;
     }
-    .nav-logo {
+    
+    /* 좌측 상단 언어 스위처 스타일 */
+    .nav-lang-switcher {
+      display: flex;
+      gap: 0.75rem;
+    }
+    .lang-btn {
+      background: none;
+      border: none;
+      color: var(--neon-green);
+      font-family: inherit;
       font-size: 1.25rem;
       font-weight: 700;
-      letter-spacing: .02em;
-      text-decoration: none;
-      color: var(--neon-green);
       cursor: pointer;
+      padding: 0;
+      opacity: 0.4;
+      transition: all 0.2s;
     }
+    .lang-btn:hover {
+      color: var(--hotpink);
+      opacity: 0.8;
+    }
+    .lang-btn.active {
+      color: var(--hotpink);
+      opacity: 1;
+    }
+
     .nav-tabs {
       display: flex;
       gap: .5rem;
@@ -81,34 +100,6 @@
       background: var(--hotpink) !important; 
       color: var(--neon-green) !important;
       border-color: var(--hotpink);
-    }
-
-    /* ── 이름 자리의 언어 선택 버튼 (KO / EN) ── */
-    .lang-switcher-title {
-      display: inline-flex;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .lang-title-btn {
-      background: none;
-      border: none;
-      color: var(--neon-green);
-      font-family: inherit;
-      font-size: clamp(2.5rem, 5vw, 4rem); /* 원래 이름 크기 유지 */
-      font-weight: 700;
-      line-height: 1.1;
-      cursor: pointer;
-      padding: 0;
-      opacity: 0.4;
-      transition: all 0.2s;
-    }
-    .lang-title-btn:hover {
-      color: var(--hotpink);
-      opacity: 0.8;
-    }
-    .lang-title-btn.active {
-      color: var(--hotpink);
-      opacity: 1;
     }
 
     /* 다국어 텍스트 본문 제어용 클래스 */
@@ -161,12 +152,12 @@
       letter-spacing: .14em; text-transform: uppercase;
       color: var(--hotpink); margin-bottom: 1.2rem;
     }
-    .home-name-sub {
+    .home-name {
       font-size: clamp(2.5rem, 5vw, 4rem);
       line-height: 1.1;
       margin-bottom: 1.5rem;
     }
-    .home-name-sub em { font-style: normal; color: var(--hotpink); }
+    .home-name em { font-style: normal; color: var(--hotpink); }
     .home-desc {
       color: var(--neon-green);
       font-size: 1.05rem;
@@ -291,7 +282,7 @@
       .about-layout { grid-template-columns: 1fr; gap: 2rem; }
       .project-item { grid-template-columns: 2rem 1fr auto; }
       .project-tags { display: none; }
-      .lang-switcher-title { justify-content: center; }
+      nav { flex-direction: column; gap: 1rem; }
     }
   </style>
 </head>
@@ -299,7 +290,11 @@
 <div class="shell">
 
   <nav>
-    <span class="nav-logo" onclick="showPage('home')">Portfolio_</span>
+    <div class="nav-lang-switcher">
+      <button class="lang-btn active" id="btn-ko" onclick="changeLang('ko')">KO</button>
+      <button class="lang-btn" id="btn-en" onclick="changeLang('en')">EN</button>
+    </div>
+    
     <ul class="nav-tabs">
       <li><button onclick="showPage('home')" id="tab-home" class="active">Home</button></li>
       <li><button onclick="showPage('about')" id="tab-about">About</button></li>
@@ -319,14 +314,7 @@
         <div class="home-right">
           <p class="home-eyebrow">SYSTEM.STATUS = "ACTIVE"</p>
           
-          <div class="lang-switcher-title">
-            <button class="lang-title-btn active" id="btn-ko" onclick="changeLang('ko')">KO</button>
-            <button class="lang-title-btn" id="btn-en" onclick="changeLang('en')">EN</button>
-          </div>
-          
-          <h1 class="home-name-sub">
-            <em>DEVELOPER_</em>
-          </h1>
+          <h1 class="home-name">hgd<br><em>DEVELOPER_</em></h1>
 
           <p class="home-desc">
             <span class="lang-ko">
@@ -359,7 +347,7 @@
         <div class="about-text">
           <p class="lang-ko">
             안녕하세요! 저는 사용자 중심의 서비스를 만드는 것을 즐기는
-            개발자 홍길동입니다. 대학에서 컴퓨터공학을 전공하며
+            개발자입니다. 대학에서 컴퓨터공학을 전공하며
             웹 개발의 즐거움을 알게 되었고, 꾸준히 사이드 프로젝트를
             진행해 왔습니다.
           </p>
@@ -485,7 +473,7 @@
   </div>
 </div>
 
-<script>
+<script {strict-completion}>
   // 페이지 전환 함수
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => {
@@ -523,3 +511,5 @@
 </script>
 </body>
 </html>
+
+```
