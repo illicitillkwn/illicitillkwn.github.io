@@ -1,10 +1,3 @@
-제공해주신 코드에서 영문/숫자 터미널 느낌을 내는 폰트인 `'Share Tech Mono'`와 `'Courier Prime'`을 빼고, 요청하신 `'Consolas'`로 깔끔하게 변경해 드렸습니다.
-
-`Consolas`는 대중적인 폰트이지만 사용자의 시스템에 설치되어 있지 않을 경우를 대비해, 대체 폰트로 모노스페이스 계열(`Courier New`, `monospace`)을 함께 지정해 두었습니다.
-
-아래 전체 코드를 복사해서 사용하시면 됩니다.
-
-```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,7 +6,7 @@
   <title>포트폴리오 — 홍길동</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin"/>
   <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
 
   <style>
@@ -31,7 +24,7 @@
       height: 100%;
       background: var(--black);
       color: var(--neon-green);
-      /* 영문/숫자는 Consolas를 우선 적용하고, 한글은 SUIT로 고정 */
+      /* [수정] 전체 문서에 Consolas를 최우선 적용하여 영문/숫자를 모두 통일합니다. */
       font-family: 'Consolas', 'Courier New', 'SUIT', monospace;
       -webkit-font-smoothing: antialiased;
     }
@@ -84,7 +77,6 @@
       background: var(--dark-gray); 
       border-color: var(--hotpink);
     }
-    /* 활성화 버튼: 핫핑크 배경 + 야광초록 글씨 */
     .nav-tabs button.active { 
       background: var(--hotpink) !important; 
       color: var(--neon-green) !important;
@@ -100,7 +92,6 @@
       max-width: 1080px;
       margin: 0 auto;
     }
-    /* 자바스크립트 연동을 위한 active 클래스 */
     .page.active {
       display: block !important;
       animation: fadeIn .3s forwards;
@@ -110,7 +101,7 @@
       to   { opacity: 1; transform: none; }
     }
 
-    /* ── HOME (왼쪽 사진, 오른쪽 자기소개) ── */
+    /* ── HOME ── */
     .home-grid {
       display: grid;
       grid-template-columns: 1fr 1.2fr;
@@ -129,7 +120,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: grayscale(100%) contrast(130%); /* 터미널 스크린 감성 흑백 필터 */
+      filter: grayscale(100%) contrast(130%);
     }
     .home-eyebrow {
       font-size: .8rem; font-weight: 700;
@@ -147,7 +138,7 @@
       font-size: 1.05rem;
       line-height: 1.8;
       margin-bottom: 2.5rem;
-      font-family: 'SUIT', sans-serif; /* 본문 한글 독해력을 위해 SUIT 우선 적용 */
+      /* font-family 개별 선언 제거 (상위 Consolas 상속) */
     }
     
     /* ── BUTTONS ── */
@@ -196,7 +187,8 @@
       line-height: 1.1;
       margin-bottom: 2.5rem;
     }
-    .about-text p { color: var(--neon-green); line-height: 1.75; margin-bottom: 1.1rem; font-family: 'SUIT', sans-serif; }
+    /* font-family 개별 선언 제거 (상위 Consolas 상속) */
+    .about-text p { color: var(--neon-green); line-height: 1.75; margin-bottom: 1.1rem; }
     .tag-list { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 2rem; }
     .tag {
       font-size: .75rem; font-weight: 700;
@@ -208,7 +200,8 @@
       letter-spacing: .1rem; text-transform: uppercase;
       color: var(--hotpink); margin-top: 1.6rem;
     }
-    .about-dl dd { margin-top: .3rem; font-size: .95rem; color: var(--neon-green); font-family: 'SUIT', sans-serif; }
+    /* font-family 개별 선언 제거 (상위 Consolas 상속) */
+    .about-dl dd { margin-top: .3rem; font-size: .95rem; color: var(--neon-green); }
     .about-dl dt:first-child { margin-top: 0; }
 
     /* ── PROJECTS ── */
@@ -225,9 +218,11 @@
       cursor: pointer;
     }
     .project-num { font-size: .85rem; font-weight: 700; color: var(--hotpink); }
-    .project-info h3 { font-size: 1.25rem; margin-bottom: .25rem; font-family: 'SUIT', sans-serif; }
+    /* font-family 개별 선언 제거 (상위 Consolas 상속) */
+    .project-info h3 { font-size: 1.25rem; margin-bottom: .25rem; }
     .project-item:hover .project-info h3 { color: var(--hotpink); }
-    .project-info p { font-size: .9rem; color: var(--neon-green); opacity: 0.8; font-family: 'SUIT', sans-serif; }
+    /* font-family 개별 선언 제거 (상위 Consolas 상속) */
+    .project-info p { font-size: .9rem; color: var(--neon-green); opacity: 0.8; }
     .project-tags { display: flex; gap: .35rem; flex-wrap: wrap; justify-content: flex-end; }
     .project-tags span {
       font-size: .7rem; font-weight: 700;
@@ -245,7 +240,8 @@
       margin-bottom: 1.2rem;
     }
     .contact-big em { font-style: normal; color: var(--hotpink); }
-    .contact-sub { color: var(--neon-green); font-size: 1rem; line-height: 1.7; margin-bottom: 3rem; max-width: 38ch; opacity: 0.8; font-family: 'SUIT', sans-serif; }
+    /* font-family 개별 선언 제거 (상위 Consolas 상속) */
+    .contact-sub { color: var(--neon-green); font-size: 1rem; line-height: 1.7; margin-bottom: 3rem; max-width: 38ch; opacity: 0.8; }
     .contact-links { display: flex; flex-direction: column; gap: 0; }
     .contact-link {
       display: flex; justify-content: space-between; align-items: center;
@@ -401,16 +397,13 @@
 
 <script>
   function showPage(id) {
-    // 모든 페이지 숨기기
     document.querySelectorAll('.page').forEach(p => {
       p.classList.remove('active');
     });
-    // 모든 탭 버튼 비활성화
     document.querySelectorAll('.nav-tabs button').forEach(b => {
       b.classList.remove('active');
     });
     
-    // 선택한 페이지와 탭만 활성화
     const targetPage = document.getElementById('page-' + id);
     const targetTab = document.getElementById('tab-' + id);
     
@@ -422,5 +415,3 @@
 </script>
 </body>
 </html>
-
-```
