@@ -12,31 +12,27 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── 터미널 흑/핑/초 색상 정의 ── */
     :root {
-      --black: #0f0f0f;      /* 배경: 검은색 */
-      --hotpink: #ff007f;    /* 버튼/포인트: 핫핑크 */
-      --neon-green: #00ff00; /* 폰트: 야광초록 */
-      --dark-gray: #1a1a1a;  /* 호버용 어두운 배경 */
+      --black: #0f0f0f;
+      --hotpink: #ff007f;
+      --neon-green: #00ff00;
+      --dark-gray: #1a1a1a;
     }
 
     html, body {
       height: 100%;
       background: var(--black);
       color: var(--neon-green);
-      /* 영문/숫자는 Consolas 최우선 적용, 한글은 SUIT로 적용 */
       font-family: 'Consolas', 'Courier New', 'SUIT', monospace;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── SHELL ── */
     .shell {
       min-height: 100vh;
       display: grid;
       grid-template-rows: auto 1fr;
     }
 
-    /* ── NAV ── */
     nav {
       display: flex;
       justify-content: space-between;
@@ -47,241 +43,212 @@
       position: sticky; top: 0; z-index: 10;
     }
     
-    /* 좌측 상단 언어 스위처 스타일 */
-    .nav-lang-switcher {
-      display: flex;
-      gap: 0.75rem;
-    }
+    .nav-lang-switcher { display: flex; gap: 0.75rem; }
     .lang-btn {
-      background: none;
-      border: none;
+      background: none; border: none;
       color: var(--neon-green);
-      font-family: inherit;
-      font-size: 1.25rem;
-      font-weight: 700;
-      cursor: pointer;
-      padding: 0;
-      opacity: 0.4;
-      transition: all 0.2s;
+      font-family: inherit; font-size: 1.25rem; font-weight: 700;
+      cursor: pointer; padding: 0; opacity: 0.4; transition: all 0.2s;
     }
-    .lang-btn:hover {
-      color: var(--hotpink);
-      opacity: 0.8;
-    }
-    .lang-btn.active {
-      color: var(--hotpink);
-      opacity: 1;
-    }
+    .lang-btn:hover { color: var(--hotpink); opacity: 0.8; }
+    .lang-btn.active { color: var(--hotpink); opacity: 1; }
 
-    .nav-tabs {
-      display: flex;
-      gap: .5rem;
-      list-style: none;
-    }
+    .nav-tabs { display: flex; gap: .5rem; list-style: none; }
     .nav-tabs button {
-      background: none;
-      border: 1px solid transparent;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: .85rem;
-      font-weight: 700;
-      letter-spacing: .05em;
-      /*text-transform: uppercase;*/
-      color: var(--neon-green);
-      padding: .5rem 1rem;
-      border-radius: 4px;
-      transition: all .15s ease-in-out;
+      background: none; border: 1px solid transparent; cursor: pointer;
+      font-family: inherit; font-size: .85rem; font-weight: 700;
+      letter-spacing: .05em; color: var(--neon-green);
+      padding: .5rem 1rem; border-radius: 4px; transition: all .15s ease-in-out;
     }
-    .nav-tabs button:hover { 
-      background: var(--dark-gray); 
-      border-color: var(--hotpink);
-    }
-    .nav-tabs button.active { 
-      background: var(--hotpink) !important; 
-      color: var(--neon-green) !important;
-      border-color: var(--hotpink);
-    }
+    .nav-tabs button:hover { background: var(--dark-gray); border-color: var(--hotpink); }
+    .nav-tabs button.active { background: var(--hotpink) !important; color: var(--neon-green) !important; border-color: var(--hotpink); }
 
-    /* 다국어 텍스트 본문 제어용 클래스 */
     .lang-en { display: none; }
     body.lang-is-en .lang-ko { display: none; }
     body.lang-is-en .lang-en { display: block; }
     body.lang-is-en span.lang-en, body.lang-is-en br.lang-en { display: inline; }
 
-    /* ── PAGE CONTENT ── */
     .pages { position: relative; }
     .page {
-      display: none;
-      opacity: 0;
+      display: none; opacity: 0;
       padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem);
-      max-width: 1080px;
-      margin: 0 auto;
+      max-width: 1080px; margin: 0 auto;
     }
-    .page.active {
-      display: block !important;
-      animation: fadeIn .3s forwards;
-    }
+    .page.active { display: block !important; animation: fadeIn .3s forwards; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: none; }
     }
 
-    /* ── HOME ── */
+    /* HOME */
     .home-grid {
       display: grid;
       grid-template-columns: 1fr 1.2fr;
-      gap: 4rem;
-      align-items: center;
-      min-height: 50vh;
+      gap: 4rem; align-items: center; min-height: 50vh;
     }
     .home-profile-wrap {
-      width: 100%;
-      aspect-ratio: 1 / 1;
+      width: 100%; aspect-ratio: 1 / 1;
       border: 2px dashed var(--neon-green);
-      padding: 10px;
-      background: var(--dark-gray);
+      padding: 10px; background: var(--dark-gray);
     }
-    .home-profile-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%) contrast(130%);
-    }
-    .home-eyebrow {
-      font-size: .8rem; font-weight: 700;
-      letter-spacing: .14em; text-transform: uppercase;
-      color: var(--hotpink); margin-bottom: 1.2rem;
-    }
-    .home-name {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-    }
+    .home-profile-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(130%); }
+    .home-eyebrow { font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--hotpink); margin-bottom: 1.2rem; }
+    .home-name { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1.5rem; }
     .home-name em { font-style: normal; color: var(--hotpink); }
-    .home-desc {
-      color: var(--neon-green);
-      font-size: 1.05rem;
-      line-height: 1.8;
-      margin-bottom: 2.5rem;
-    }
-    
-    /* ── BUTTONS ── */
+    .home-desc { color: var(--neon-green); font-size: 1.05rem; line-height: 1.8; margin-bottom: 2.5rem; }
     .home-cta-group { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
     .btn-dark {
-      display: inline-block;
-      background: var(--hotpink); 
-      color: var(--neon-green);
-      font-size: .85rem; font-weight: 700;
-      letter-spacing: .05em; text-transform: uppercase;
-      text-decoration: none; border: none; cursor: pointer;
-      font-family: inherit;
-      padding: .85rem 1.8rem; border-radius: 4px;
-      transition: opacity .2s;
+      display: inline-block; background: var(--hotpink); color: var(--neon-green);
+      font-size: .85rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+      text-decoration: none; border: none; cursor: pointer; font-family: inherit;
+      padding: .85rem 1.8rem; border-radius: 4px; transition: opacity .2s;
     }
     .btn-dark:hover { opacity: 0.8; }
-    
     .btn-ghost {
-      font-size: .85rem; font-weight: 700;
-      letter-spacing: .05em; text-transform: uppercase;
-      color: var(--neon-green); background: none; 
-      border: 1px solid var(--neon-green);
-      cursor: pointer; font-family: inherit;
-      padding: .85rem 1.8rem; border-radius: 4px;
-      transition: all .2s;
+      font-size: .85rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+      color: var(--neon-green); background: none; border: 1px solid var(--neon-green);
+      cursor: pointer; font-family: inherit; padding: .85rem 1.8rem; border-radius: 4px; transition: all .2s;
     }
-    .btn-ghost:hover { 
-      background: var(--hotpink); 
-      color: var(--neon-green); 
-      border-color: var(--hotpink); 
-    }
+    .btn-ghost:hover { background: var(--hotpink); color: var(--neon-green); border-color: var(--hotpink); }
 
-    /* ── ABOUT ── */
-    .about-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-    }
-    .page-eyebrow {
-      font-size: .8rem; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase;
-      color: var(--hotpink); margin-bottom: 1rem;
-    }
-    .page-title {
-      font-size: clamp(2rem, 4vw, 3rem);
-      line-height: 1.1;
-      margin-bottom: 2.5rem;
-    }
+    /* ABOUT */
+    .about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .page-eyebrow { font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--hotpink); margin-bottom: 1rem; }
+    .page-title { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; margin-bottom: 2.5rem; }
     .about-text p { color: var(--neon-green); line-height: 1.75; margin-bottom: 1.1rem; }
     .tag-list { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 2rem; }
-    .tag {
-      font-size: .75rem; font-weight: 700;
-      border: 1px solid var(--neon-green); border-radius: 4px;
-      padding: .28rem .8rem; color: var(--neon-green);
-    }
-    .about-dl dt {
-      font-size: .75rem; font-weight: 700;
-      letter-spacing: .1rem; text-transform: uppercase;
-      color: var(--hotpink); margin-top: 1.6rem;
-    }
+    .tag { font-size: .75rem; font-weight: 700; border: 1px solid var(--neon-green); border-radius: 4px; padding: .28rem .8rem; color: var(--neon-green); }
+    .about-dl dt { font-size: .75rem; font-weight: 700; letter-spacing: .1rem; text-transform: uppercase; color: var(--hotpink); margin-top: 1.6rem; }
     .about-dl dd { margin-top: .3rem; font-size: .95rem; color: var(--neon-green); }
     .about-dl dt:first-child { margin-top: 0; }
 
-    /* ── PROJECTS ── */
+    /* ── PROJECTS (아코디언) ── */
     .project-list { border-top: 1px solid var(--neon-green); }
+
     .project-item {
+      border-bottom: 1px solid var(--neon-green);
+    }
+
+    .project-header {
       display: grid;
       grid-template-columns: 2.5rem 1fr auto auto;
       align-items: center;
       gap: 1.5rem 2rem;
       padding: 1.8rem 0;
-      border-bottom: 1px solid var(--neon-green);
-      text-decoration: none;
-      color: inherit;
       cursor: pointer;
+      user-select: none;
+      transition: color .2s;
     }
+    .project-header:hover .project-info h3 { color: var(--hotpink); }
+    .project-header:hover .project-arrow { color: var(--hotpink); }
+
     .project-num { font-size: .85rem; font-weight: 700; color: var(--hotpink); }
-    .project-info h3 { font-size: 1.25rem; margin-bottom: .25rem; }
-    .project-item:hover .project-info h3 { color: var(--hotpink); }
+    .project-info h3 { font-size: 1.25rem; margin-bottom: .25rem; transition: color .2s; }
     .project-info p { font-size: .9rem; color: var(--neon-green); opacity: 0.8; }
     .project-tags { display: flex; gap: .35rem; flex-wrap: wrap; justify-content: flex-end; }
-    .project-tags span {
-      font-size: .7rem; font-weight: 700;
-      border: 1px solid var(--neon-green); border-radius: 4px;
-      padding: .2rem .6rem; color: var(--neon-green);
+    .project-tags span { font-size: .7rem; font-weight: 700; border: 1px solid var(--neon-green); border-radius: 4px; padding: .2rem .6rem; color: var(--neon-green); }
+    
+    .project-arrow {
+      font-size: 1.2rem; color: var(--neon-green);
+      transition: transform .3s, color .2s;
+      display: inline-block;
+      line-height: 1;
     }
-    .project-arrow { font-size: 1.1rem; color: var(--neon-green); transition: transform .2s; }
-    .project-item:hover .project-arrow { transform: translate(4px,-4px); color: var(--hotpink); }
+    .project-item.open .project-arrow { transform: rotate(90deg); color: var(--hotpink); }
 
-    /* ── CONTACT ── */
-    .contact-layout { max-width: 620px; }
-    .contact-big {
-      font-size: clamp(2.2rem, 5vw, 4rem);
-      line-height: 1.1;
+    /* 아코디언 펼침 패널 */
+    .project-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .35s ease;
+      overflow: hidden;
+    }
+    .project-item.open .project-body { grid-template-rows: 1fr; }
+    .project-body-inner {
+      overflow: hidden;
+    }
+    .project-body-content {
+      padding: 0 0 2.4rem 4rem; /* 번호 너비에 맞춰 들여쓰기 */
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    /* 상세 텍스트 */
+    .project-detail-text h4 {
+      font-size: .75rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--hotpink); margin-bottom: .7rem;
+    }
+    .project-detail-text p {
+      font-size: .9rem; line-height: 1.75;
+      color: var(--neon-green); opacity: 0.9;
       margin-bottom: 1.2rem;
     }
+    .project-detail-text a {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .8rem; font-weight: 700;
+      color: var(--hotpink); text-decoration: none;
+      border: 1px solid var(--hotpink); padding: .4rem 1rem; border-radius: 4px;
+      transition: all .2s; margin-right: .5rem; margin-top: .2rem;
+    }
+    .project-detail-text a:hover { background: var(--hotpink); color: var(--neon-green); }
+
+    /* 이미지 업로드 영역 */
+    .project-images h4 {
+      font-size: .75rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--hotpink); margin-bottom: .7rem;
+    }
+    /* 프로젝트 이미지 그리드 */
+    .project-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .5rem;
+    }
+    /* 첫 번째 이미지는 두 칸 차지 (메인 이미지) */
+    .project-img-grid .proj-img:first-child {
+      grid-column: 1 / -1;
+    }
+    .proj-img {
+      aspect-ratio: 16/9;
+      border: 2px dashed var(--neon-green);
+      background: var(--dark-gray);
+      overflow: hidden;
+    }
+    .proj-img img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      filter: grayscale(60%) contrast(110%);
+      transition: filter .3s;
+    }
+    .proj-img:hover img { filter: grayscale(0%) contrast(100%); }
+
+    /* CONTACT */
+    .contact-layout { max-width: 620px; }
+    .contact-big { font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1.2rem; }
     .contact-big em { font-style: normal; color: var(--hotpink); }
     .contact-sub { color: var(--neon-green); font-size: 1rem; line-height: 1.7; margin-bottom: 3rem; max-width: 38ch; opacity: 0.8; }
     .contact-links { display: flex; flex-direction: column; gap: 0; }
     .contact-link {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 1.3rem 0;
-      border-top: 1px solid var(--neon-green);
-      text-decoration: none; color: var(--neon-green);
-      transition: all .2s;
+      padding: 1.3rem 0; border-top: 1px solid var(--neon-green);
+      text-decoration: none; color: var(--neon-green); transition: all .2s;
     }
     .contact-link:last-child { border-bottom: 1px solid var(--neon-green); }
-    .contact-link:hover { background: var(--dark-gray); color: var(--hotpink); }
+    .contact-link:hover { background: var(--dark-gray); color: var(--hotpink); padding-left: .5rem; }
     .contact-link-label { font-size: .8rem; font-weight: 700; color: var(--hotpink); }
     .contact-link-value { font-size: .95rem; }
 
-    /* ── RESPONSIVE ── */
+    /* RESPONSIVE */
     @media (max-width: 768px) {
       .home-grid { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
       .home-profile-wrap { max-width: 280px; margin: 0 auto; }
       .home-cta-group { justify-content: center; }
       .about-layout { grid-template-columns: 1fr; gap: 2rem; }
-      .project-item { grid-template-columns: 2rem 1fr auto; }
+      .project-header { grid-template-columns: 2rem 1fr auto; }
       .project-tags { display: none; }
+      .project-body-content { grid-template-columns: 1fr; padding-left: 2.5rem; }
       nav { flex-direction: column; gap: 1rem; }
     }
   </style>
@@ -294,7 +261,6 @@
       <button class="lang-btn active" id="btn-ko" onclick="changeLang('ko')">KO</button>
       <button class="lang-btn" id="btn-en" onclick="changeLang('en')">EN</button>
     </div>
-    
     <ul class="nav-tabs">
       <li><button onclick="showPage('home')" id="tab-home" class="active">Home</button></li>
       <li><button onclick="showPage('about')" id="tab-about">About</button></li>
@@ -305,30 +271,27 @@
 
   <div class="pages">
 
+    <!-- HOME -->
     <section class="page active" id="page-home">
       <div class="home-grid">
         <div class="home-profile-wrap">
           <img class="home-profile-img" src="https://via.placeholder.com/400" alt="프로필 사진">
         </div>
-         
         <div class="home-right">
           <p class="home-eyebrow">Portfolio</p>
-          
-          <h1 class="home-name">Shim<br><em>Jinju</em></h1>
-
+          <h1 class="home-name">Shim<br><em>jinju</em></h1>
           <p class="home-desc">
             <span class="lang-ko">
               IT의 다양한 분야를 배우고 있는<br>
               백엔드 지망생입니다.<br>
               프로젝트 연구를 좋아합니다.
-            </span>
+            <span>
             <span class="lang-en">
               Aspiring Backend Developer<br>
               Currently learning various fields of IT and passionate<br>
               about project research and technology exploration.
             </span>
           </p>
-
           <div class="home-cta-group">
             <button class="btn-dark" onclick="showPage('projects')">./view_projects</button>
             <button class="btn-ghost" onclick="showPage('contact')">contact_me →</button>
@@ -337,6 +300,7 @@
       </div>
     </section>
 
+    <!-- ABOUT -->
     <section class="page" id="page-about">
       <p class="page-eyebrow">Introduce</p>
       <h2 class="page-title">
@@ -356,21 +320,18 @@
             팀과 함께 성장하는 환경을 추구합니다. 새로운 기술을
             빠르게 익히고 실제로 적용해 보는 걸 즐깁니다.
           </p>
-
           <p class="lang-en">
             Hello.
             I am pursuing a comprehensive curriculum in Information and Communication, 
             continuously striving to enhance my professional competencies. 
             I have been engaged in a range of projects across diverse fields,
             gaining experience and broadening my expertise.
-
           </p>
           <p class="lang-en">
             I enjoy simplifying complex problems and thrive in environments 
             where I can grow alongside my team. 
             I love quickly learning and applying new technologies.
           </p>
-
           <div class="tag-list">
             <span class="tag">Quant</span>
             <span class="tag">C</span>
@@ -381,73 +342,153 @@
         </div>
         <dl class="about-dl">
           <dt>Name</dt>
-          <dd><span class="lang-ko">심진주</span><span class="lang-en">Hong Gil Dong</span></dd>
-          
+          <dd><span class="lang-ko">심진주</span><span class="lang-en">Jinju Shim</span></dd>
           <dt>Major</dt>
-          <dd>
-            <span class="lang-ko">정보통신공학 (순천향대학교, 2023.3-2027.2)</span>
-            <span class="lang-en">Information Communication Engineering (SCH Univ, 2023.3-2027.2)</span>
-          </dd>
-          
+          <dd><span class="lang-ko">정보통신공학 (순천향대학교, 2023.3-2027.2)</span><span class="lang-en">Information Communication Engineering (SCH Univ, 2023.3-2027.2)</span></dd>
           <dt>Main Research Subjectsn</dt>
-          <dd>
-            <span class="lang-ko">금융공학, 임베디드SW, 회로설계</span>
-            <span class="lang-en">Financial Engineering, Embedded SW, Circuit Design</span>
-          </dd>
-          
+          <dd><span class="lang-ko">금융공학, 임베디드SW, 회로설계</span><span class="lang-en">Financial Engineering, Embedded SW, Circuit Design</span></dd>
           <dt>EMAIL</dt><dd>hello@example.com</dd>
           <dt>GITHUB</dt><dd>github.com/username</dd>
         </dl>
       </div>
     </section>
 
+    <!-- PROJECTS -->
     <section class="page" id="page-projects">
       <p class="page-eyebrow">ls -la ./projects</p>
       <h2 class="page-title">
         <span class="lang-ko">주요 프로젝트</span>
         <span class="lang-en">Featured Projects</span>
       </h2>
+
       <div class="project-list">
 
-        <a class="project-item" href="#" target="_blank" rel="noopener">
-          <span class="project-num">01</span>
-          <div class="project-info">
-            <h3>
-              <span class="lang-ko">스테레오 앰프 회로 구현</span>
-              <span class="lang-en">Stereo Amplifier Circuit Implement</span>
-            </h3>
-            <p>
-              <span class="lang-ko">팀 일정 관리 웹앱 — 실시간 동기화와 직관적인 드래그 앤 드롭 UI 구현</span>
-              <span class="lang-en">Team Scheduler Web App — Real-time sync & intuitive Drag-and-Drop UI</span>
-            </p>
+        <!-- Project 01 -->
+        <div class="project-item" data-project="01">
+          <div class="project-header" onclick="toggleProject(this)">
+            <span class="project-num">01</span>
+            <div class="project-info">
+              <h3>
+                <span class="lang-ko">스테레오 앰프 회로 구현</span>
+                <span class="lang-en">Stereo Amplifier Circuit Implement</span>
+              </h3>
+              <p>
+                <span class="lang-ko">팀 일정 관리 웹앱 — 실시간 동기화와 직관적인 드래그 앤 드롭 UI 구현</span>
+                <span class="lang-en">Team Scheduler Web App — Real-time sync & intuitive Drag-and-Drop UI</span>
+              </p>
+            </div>
+            <div class="project-tags">
+              <span>React</span><span>Firebase</span>
+            </div>
+            <span class="project-arrow">▶</span>
           </div>
-          <div class="project-tags">
-            <span>React</span><span>Firebase</span>
+          <div class="project-body">
+            <div class="project-body-inner">
+              <div class="project-body-content">
+                <div class="project-detail-text">
+                  <h4>
+                    <span class="lang-ko">프로젝트 상세</span>
+                    <span class="lang-en">Project Detail</span>
+                  </h4>
+                  <p class="lang-ko">
+                    팀 일정 관리 웹앱입니다. React와 Firebase를 활용하여 실시간 동기화 기능을 구현했으며,
+                    직관적인 드래그 앤 드롭 UI로 사용자 경험을 향상시켰습니다.
+                  </p>
+                  <p class="lang-en">
+                    A team schedule management web app. Built with React and Firebase for real-time sync,
+                    with an intuitive drag-and-drop UI for enhanced user experience.
+                  </p>
+                  <a href="#" target="_blank">GitHub ↗</a>
+                  <a href="#" target="_blank">Live Demo ↗</a>
+                </div>
+                <div class="project-images">
+                  <h4>
+                    <span class="lang-ko">스크린샷</span>
+                    <span class="lang-en">Screenshots</span>
+                  </h4>
+                  <!-- src="" 에 이미지 경로를 넣어주세요 -->
+                  <div class="project-img-grid">
+                    <div class="proj-img">
+                      <img src="https://via.placeholder.com/800x450/1a1a1a/00ff00?text=Main+Screenshot" alt="메인 스크린샷">
+                    </div>
+                    <div class="proj-img">
+                      <img src="https://via.placeholder.com/400x225/1a1a1a/ff007f?text=Detail+01" alt="상세 01">
+                    </div>
+                    <div class="proj-img">
+                      <img src="https://via.placeholder.com/400x225/1a1a1a/ff007f?text=Detail+02" alt="상세 02">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <span class="project-arrow">↗</span>
-        </a>
+        </div>
 
-        <a class="project-item" href="#" target="_blank" rel="noopener">
-          <span class="project-num">02</span>
-          <div class="project-info">
-            <h3>
-              <span class="lang-ko">프로젝트 이름 B</span>
-              <span class="lang-en">Project Beta</span>
-            </h3>
-            <p>
-              <span class="lang-ko">오픈 API 활용 날씨 대시보드 — 위치 기반 실시간 데이터 시각화</span>
-              <span class="lang-en">Weather Dashboard — Location-based real-time data visualization via Open API</span>
-            </p>
+        <!-- Project 02 -->
+        <div class="project-item" data-project="02">
+          <div class="project-header" onclick="toggleProject(this)">
+            <span class="project-num">02</span>
+            <div class="project-info">
+              <h3>
+                <span class="lang-ko">프로젝트 이름 B</span>
+                <span class="lang-en">Project Beta</span>
+              </h3>
+              <p>
+                <span class="lang-ko">오픈 API 활용 날씨 대시보드 — 위치 기반 실시간 데이터 시각화</span>
+                <span class="lang-en">Weather Dashboard — Location-based real-time data visualization via Open API</span>
+              </p>
+            </div>
+            <div class="project-tags">
+              <span>TypeScript</span><span>Chart.js</span>
+            </div>
+            <span class="project-arrow">▶</span>
           </div>
-          <div class="project-tags">
-            <span>TypeScript</span><span>Chart.js</span>
+          <div class="project-body">
+            <div class="project-body-inner">
+              <div class="project-body-content">
+                <div class="project-detail-text">
+                  <h4>
+                    <span class="lang-ko">프로젝트 상세</span>
+                    <span class="lang-en">Project Detail</span>
+                  </h4>
+                  <p class="lang-ko">
+                    오픈 API를 활용한 날씨 대시보드입니다. TypeScript와 Chart.js를 사용하여
+                    위치 기반 실시간 날씨 데이터를 직관적으로 시각화합니다.
+                  </p>
+                  <p class="lang-en">
+                    A weather dashboard using Open APIs. Built with TypeScript and Chart.js to
+                    visualize real-time location-based weather data intuitively.
+                  </p>
+                  <a href="#" target="_blank">GitHub ↗</a>
+                  <a href="#" target="_blank">Live Demo ↗</a>
+                </div>
+                <div class="project-images">
+                  <h4>
+                    <span class="lang-ko">스크린샷</span>
+                    <span class="lang-en">Screenshots</span>
+                  </h4>
+                  <!-- src="" 에 이미지 경로를 넣어주세요 -->
+                  <div class="project-img-grid">
+                    <div class="proj-img">
+                      <img src="https://via.placeholder.com/800x450/1a1a1a/00ff00?text=Main+Screenshot" alt="메인 스크린샷">
+                    </div>
+                    <div class="proj-img">
+                      <img src="https://via.placeholder.com/400x225/1a1a1a/ff007f?text=Detail+01" alt="상세 01">
+                    </div>
+                    <div class="proj-img">
+                      <img src="https://via.placeholder.com/400x225/1a1a1a/ff007f?text=Detail+02" alt="상세 02">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <span class="project-arrow">↗</span>
-        </a>
+        </div>
 
       </div>
     </section>
 
+    <!-- CONTACT -->
     <section class="page" id="page-contact">
       <div class="contact-layout">
         <p class="page-eyebrow">ssh contact@hong</p>
@@ -463,12 +504,12 @@
           <a class="contact-link" href="mailto:hello@example.com">
             <span class="contact-link-label">EMAIL</span>
             <span class="contact-link-value">hello@example.com</span>
-            <span class="contact-link-arrow">↗</span>
+            <span>↗</span>
           </a>
           <a class="contact-link" href="https://github.com/username" target="_blank" rel="noopener">
             <span class="contact-link-label">GITHUB</span>
             <span class="contact-link-value">github.com/username</span>
-            <span class="contact-link-arrow">↗</span>
+            <span>↗</span>
           </a>
         </div>
       </div>
@@ -477,31 +518,24 @@
   </div>
 </div>
 
-<script {strict-completion}>
-  // 페이지 전환 함수
+<script>
+  /* ── 페이지 전환 ── */
   function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => {
-      p.classList.remove('active');
-    });
-    document.querySelectorAll('.nav-tabs button').forEach(b => {
-      b.classList.remove('active');
-    });
-    
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
     const targetPage = document.getElementById('page-' + id);
-    const targetTab = document.getElementById('tab-' + id);
-    
+    const targetTab  = document.getElementById('tab-' + id);
     if (targetPage && targetTab) {
       targetPage.classList.add('active');
       targetTab.classList.add('active');
     }
   }
 
-  // 언어 전환 함수
+  /* ── 언어 전환 ── */
   function changeLang(lang) {
-    const body = document.body;
+    const body  = document.body;
     const btnKo = document.getElementById('btn-ko');
     const btnEn = document.getElementById('btn-en');
-
     if (lang === 'en') {
       body.classList.add('lang-is-en');
       btnEn.classList.add('active');
@@ -512,8 +546,21 @@
       btnEn.classList.remove('active');
     }
   }
+
+  /* ── 프로젝트 아코디언 ── */
+  function toggleProject(headerEl) {
+    const item = headerEl.closest('.project-item');
+    const isOpen = item.classList.contains('open');
+
+    // 다른 모두 닫기 (한 번에 하나만 열기 원하면 유지, 동시에 여러 개 열려면 아래 두 줄 제거)
+    document.querySelectorAll('.project-item.open').forEach(el => {
+      if (el !== item) el.classList.remove('open');
+    });
+
+    item.classList.toggle('open', !isOpen);
+  }
+
+
 </script>
 </body>
 </html>
-
-```
