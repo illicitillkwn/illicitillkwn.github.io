@@ -91,18 +91,20 @@
       width: 100%; aspect-ratio: 1 / 1;
       border: 2px dashed var(--neon-green);
       padding: 10px; background: var(--dark-gray);
-    }
-    */
-    .home-profile-img {
-      width: 400px;
-      aspect-ratio: 1 / 1; /* 전체를 정사각형으로 */
+    }*/
+
+    .home-profile-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border: 2px dashed var(--neon-green);
+      padding: 10px;
+      background: var(--dark-gray);
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
-      overflow: hidden;
+      gap: 5px; /* 칸 사이 간격 */
     }
-
-    .home-profile-img img {
+    .home-profile-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
