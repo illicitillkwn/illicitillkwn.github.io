@@ -86,10 +86,26 @@
       grid-template-columns: 1fr 1.2fr;
       gap: 4rem; align-items: center; min-height: 50vh;
     }
+    /*
     .home-profile-wrap {
       width: 100%; aspect-ratio: 1 / 1;
       border: 2px dashed var(--neon-green);
       padding: 10px; background: var(--dark-gray);
+    }
+    */
+    .home-profile-img {
+      width: 400px;
+      aspect-ratio: 1 / 1; /* 전체를 정사각형으로 */
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .home-profile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .home-profile-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(130%); }
     .home-eyebrow { font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--hotpink); margin-bottom: 1.2rem; }
@@ -275,7 +291,10 @@
     <section class="page active" id="page-home">
       <div class="home-grid">
         <div class="home-profile-wrap">
-          <img class="home-profile-img" src="https://via.placeholder.com/400" alt="프로필 사진">
+          <img src="images/t1.jpg" alt="">
+          <img src="images/t2.jpg" alt="">
+          <img src="images/t3.jpg" alt="">
+          <img src="images/t4.jpg" alt="">
         </div>
         <div class="home-right">
           <p class="home-eyebrow">Portfolio</p>
@@ -293,8 +312,8 @@
             </span>
           </p>
           <div class="home-cta-group">
-            <button class="btn-dark" onclick="showPage('projects')">./view_projects</button>
-            <button class="btn-ghost" onclick="showPage('contact')">contact_me →</button>
+            <button class="btn-dark" onclick="showPage('projects')">view projects</button>
+            <button class="btn-ghost" onclick="showPage('contact')">contact me →</button>
           </div>
         </div>
       </div>
@@ -332,11 +351,12 @@
             where I can grow rapidly in a short period. 
             I enjoy quickly learning new technologies and applying them in practice.
           </p>
-          <dt>일정 수준이상으로 다룰 수 있는 것들</dt>
+          <div class="tag-list">
             <span class="tag">C</span>
-            <span class="tag">Esp32C</span>
+            <span class="tag">Esp32</span>
             <span class="tag">LSTM</span>
             <span class="tag">Scikit-Learn</span>
+          </div>
         </div>
         <dl class="about-dl">
           <dt>Name</dt>
@@ -345,11 +365,12 @@
           <dd><span class="lang-ko">정보통신공학 (순천향대학교, 2023.3-2027.2)</span><span class="lang-en">Information Communication Engineering (SCH Univ, 2023.3-2027.2)</span></dd>
           <dt>Main Research Subjects</dt>
           <dd><span class="lang-ko">금융공학, 임베디드SW, 회로설계</span><span class="lang-en">Financial Engineering, Embedded SW, Circuit Design</span></dd>
-          <dt>프로젝션에 언급하지 않았지만 경험해본 것들</dt>
-            <span class="tag">Quartus</span>
+          <dt>learned the fundamentals</dt><dd><span>STM32, Quartus, Nmap, Rooting</span></dd>
+          <!-- 
+          <span class="tag">Quartus</span>
             <span class="tag">STM32</span>
-            <span class="tag">Kali</span>
-            <span class="tag">Rooting</span>
+            <span class="tag">Nmap</span>
+            <span class="tag">Rooting</span> -->
         </dl>
       </div>
     </section>
