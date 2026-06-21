@@ -306,7 +306,7 @@
               IT의 다양한 분야를 배우고 있는<br>
               대학생입니다.<br>
               프로젝트 연구를 좋아합니다.
-            <span>
+            </span>
             <span class="lang-en">
               Aspiring Backend Developer<br>
               Currently learning various fields of IT and passionate<br>
@@ -685,10 +685,18 @@
           <span class="lang-en">I want to get an intership.</span>
         </p>
         <div class="contact-links">
-          <a class="contact-link" href="mailto:1559079113002z@gmail.com">
+          <a class="contact-link" href="#" onclick="copyEmail(event)">
             <span class="contact-link-label">EMAIL</span>
-            <span class="contact-link-value">1559079113002z@gmail.com</span>
-            <span>↗</span>
+            <span class="contact-link-value">12z@gmail.com</span>
+            <span>copy</span>
+          </a>
+        </div>
+        <script>
+          function copyEmail(e) {
+            e.preventDefault();
+            navigator.clipboard.writeText("12z@gmail.com");
+          }
+        </script>
           </a>
           <a class="contact-link" href="www.linkedin.com/in/진주-심-a11211417" target="_blank" rel="noopener">
             <span class="contact-link-label">Linkedin</span>
